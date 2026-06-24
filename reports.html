@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Reports</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+    }
+    .card {
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .summary-card {
+      border-radius: 20px;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .summary-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+    }
+    .gradient-blue { background: linear-gradient(90deg, #0d6efd, #6c63ff); }
+    .gradient-green { background: linear-gradient(90deg, #28a745, #20c997); }
+    .gradient-red { background: linear-gradient(90deg, #dc3545, #ff6b6b); }
+    .gradient-yellow { background: linear-gradient(90deg, #ffc107, #ffca2c); color: #000; }
+
+    .chart-card {
+      background: linear-gradient(135deg, #ffffff, #f0f3ff);
+      padding: 30px;
+      margin-top: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    #exportCSV {
+      border-radius: 12px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #6c63ff, #0d6efd);
+      border: none;
+      transition: all 0.3s;
+    }
+    #exportCSV:hover {
+      background: linear-gradient(90deg, #0d6efd, #6c63ff);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+      <div class="container-fluid">
+          <a class="navbar-brand fw-bold fs-4" href="index.html">Attendance Portal</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
+              <li class="nav-item"><a class="nav-link" href="add-student.html">Add Student</a></li>
+              <li class="nav-item"><a class="nav-link" href="mark-attendance.html">Mark Attendance</a></li>
+              <li class="nav-item"><a class="nav-link" href="view-attendance.html">View Attendance</a></li>
+              <li class="nav-item"><a class="nav-link active" href="reports.html">Reports</a></li>
+              <li class="nav-item"><a class="nav-link" href="login.html">Logout</a></li>
+            </ul>
+          </div>
+      </div>
+  </nav>
+
+  <div class="container my-5">
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="summary-card gradient-blue">
+          <h5>Total Students</h5>
+          <h2 id="totalStudents">0</h2>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="summary-card gradient-green">
+          <h5>Present Today</h5>
+          <h2 id="presentToday">0</h2>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="summary-card gradient-red">
+          <h5>Absent Today</h5>
+          <h2 id="absentToday">0</h2>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="summary-card gradient-yellow">
+          <h5>Attendance %</h5>
+          <h2 id="attendancePercent">0%</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Card -->
+    <div class="chart-card">
+      <h3 class="text-center mb-4"><i class="bi bi-bar-chart-line-fill me-2"></i>Attendance Trend</h3>
+      <canvas id="attendanceChart" height="150"></canvas>
+      <button id="exportCSV" class="btn w-100 mt-4 py-2"><i class="bi bi-download me-2"></i>Export as CSV</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+    // Populate summary cards
+    const totalStudentsEl = document.getElementById('totalStudents');
+    const presentTodayEl = document.getElementById('presentToday');
+    const absentTodayEl = document.getElementById('absentToday');
+    const attendancePercentEl = document.getElementById('attendancePercent');
+
+    const students = JSON.parse(localStorage.getItem('students')) || [];
+    const attendance = JSON.parse(localStorage.getItem('attendance')) || [];
+    const today = new Date().toISOString().split('T')[0];
+
+    const todayRecords = attendance.filter(a => a.date === today);
+    const presentCount = todayRecords.filter(a => a.status === 'Present').length;
+    const absentCount = todayRecords.filter(a => a.status === 'Absent').length;
+    const total = students.length;
+    const percent = total > 0 ? Math.round((presentCount / total) * 100) : 0;
+
+    totalStudentsEl.textContent = total;
+    presentTodayEl.textContent = presentCount;
+    absentTodayEl.textContent = absentCount;
+    attendancePercentEl.textContent = percent + '%';
+
+    // Chart.js example
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: students.map(s => s.name),
+        datasets: [{
+          label: 'Attendance %',
+          data: students.map(s => {
+            const rec = attendance.filter(a => a.roll === s.roll);
+            const p = rec.filter(r => r.status === 'Present').length;
+            return rec.length ? Math.round((p/rec.length)*100) : 0;
+          }),
+          backgroundColor: '#0d6efd'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 100 } }
+      }
+    });
+  </script>
+</body>
+</html>

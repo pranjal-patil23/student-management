@@ -1,0 +1,101 @@
+/* General Body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+.navbar-brand {
+    letter-spacing: 1px;
+}
+.nav-link {
+    font-weight: 500;
+    transition: 0.3s;
+}
+.nav-link:hover {
+    color: #ffd700 !important;
+}
+
+/* Summary Cards */
+.summary-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.summary-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+/* Gradients and Text Colors */
+.gradient-blue {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff; /* white works on dark blue */
+}
+.gradient-green {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: #fff; /* white works on green */
+}
+.gradient-red {
+    background: linear-gradient(135deg, #ff6a6a 0%, #ff8e53 100%);
+    color: #fff; /* white works on red */
+}
+.gradient-yellow {
+    background: linear-gradient(135deg, #fddb92 0%, #f1f1c9 100%);
+    color: #333; /* dark text for light yellow */
+}
+.gradient-orange {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #333; /* dark text for light orange */
+}
+.gradient-purple {
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    color: #fff; /* white works on purple */
+}
+
+/* Quick Action Cards */
+.quick-card {
+    border-radius: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.quick-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+}
+
+/* Charts */
+canvas {
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+/* Typography */
+h2, h5 {
+    font-weight: 600;
+}
+
+/* Icon Hover Animation */
+.bi {
+    transition: transform 0.3s;
+}
+.bi:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .summary-card, .quick-card {
+        text-align: center;
+    }
+    .summary-card h2 {
+        font-size: 1.5rem;
+    }
+}
