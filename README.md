@@ -24,6 +24,9 @@ A web-based attendance management system built using HTML, CSS, JavaScript, Boot
 - Bootstrap 5
 - Chart.js
 
+## Screenshots
+
+<img width="1823" height="858" alt="Screenshot 2025-10-16 232610" src="https://github.com/user-attachments/assets/f1fb0898-e1c0-4f4f-ac52-8fe403fb79f8" />
 
 ## Future Improvements
 
