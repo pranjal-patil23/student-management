@@ -111,33 +111,8 @@ Student-Attendance-Management-System/
 
 ---
 
-## 🚀 Getting Started
 
-### Clone the Repository
 
-```bash
-git clone https://github.com/your-username/student-attendance-management-system.git
-```
-
-### Navigate to the Project Folder
-
-```bash
-cd student-attendance-management-system
-```
-
-### Run the Project
-
-Simply open:
-
-```bash
-login.html
-```
-
-in your browser.
-
-No additional setup or installation is required.
-
----
 
 ## 💡 Future Enhancements
 
