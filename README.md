@@ -175,17 +175,10 @@ This project helped me gain practical experience in:
 
 Electronics & Computer Science Engineering Student
 
-💻 Java Developer  
 🌐 Web Development Enthusiast  
 📚 Learning Data Structures & Algorithms  
 🚀 Aspiring Software Engineer
 
-### Connect with Me
-
-- GitHub: https://github.com/your-username
-- LinkedIn: Add your LinkedIn profile link here
-
----
 
 ## ⚠️ Note
 
