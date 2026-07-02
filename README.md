@@ -154,7 +154,6 @@ Electronics & Computer Science Engineering Student
 📚 Learning Data Structures & Algorithms  
 🚀 Aspiring Software Engineer
 
-
 ## ⚠️ Note
 
 This project is developed for educational and learning purposes. Data is stored using browser Local Storage and will be cleared if browser storage is removed.
